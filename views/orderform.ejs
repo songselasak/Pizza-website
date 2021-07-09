@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../assets/bootstap/css/bootstrap.css">
+    <link href="../public/assets/css/bootstrap-datepicker.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../public/assets/css/orderform.css">
+
+    
+  
+    <script src="../public/assets/js/jquery-1.10.2.js" type="text/javascript"></script>
+    <script src="../public/assets/js/bootstrap.js" type="text/javascript"></script>
+    <script src="../public/assets/js/bootstrap-datepicker.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="container" id="main_section">
+        <div>
+          <img id="logo" src="../public/assets/img/pizza.png" alt="" srcset=""><br>
+          <span id="brandName">Online Ordering Pizza Shop</span>
+        </div>
+        <div>
+            <form action="/admin/add-order" method="POST">
+              <input type="text" name="productID" value="<%=product._id%>" style="display: none;" id="product">
+              <input type="text" name="product" value="<%=product.title%>" style="display: none;" id="product">
+              <input type="text" name="price" value="<%=product.price%>" style="display: none;" id="price">
+              <input type="text" name="username" value="<%=username%>" style="display: none;" id="username">
+              <div class="jumbotron" id="pizza_header">
+                <h1 class="display-4" id="text_block">Ordering Form</h1>
+              </div>
+              <div>
+                <h2>Order Details</h2>
+                <div>
+                  <p>Choose Your Service</p>
+
+                    <div class="row" id="purchase_image">
+                      <div class="col-sm">
+                        <label>
+                          <input type="radio" name="service" value="Pickup" checked>
+                          <img src="../public/assets/img/Bag.png">
+                        </label>
+                      </div>
+                      <div class="col-sm">
+                        <label>
+                          <input type="radio" name="service" value="Delivery">
+                          <img src="../public/assets/img/motorcycle.png">
+                        </label>
+                      </div>
+                      <div class="col-sm">
+                        <label>
+                          <input type="radio" name="service" value="Reserve">
+                          <img src="../public/assets/img/fastfood.png">
+                        </label>
+                      </div>
+
+                      <!-- <div class="col-sm">
+                        <img src="../public/assets/img/Bag.png" alt="">
+                      </div>
+                      <div class="col-sm">
+                        <img src="../public/assets/img/motorcycle.png" alt="">
+                      </div>
+                      <div class="col-sm">
+                        <img src="../public/assets/img/fastfood.png" alt="">
+                      </div> -->
+                    </div>
+                    <div class="row" id="purchase_text">
+                      <div class="col-sm">
+                        Pickup
+                      </div>
+                      <div class="col-sm">
+                        Delivery
+                      </div>
+                      <div class="col-sm">
+                        Reserve Table
+                      </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                  <label for="" class="col-sm-3 col-form-label">Name :</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" id="InputName" name="name">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="" class="col-sm-3 col-form-label">Phone Number :</label>
+                  <div class="col-sm-9">
+                    <input type="tel" class="form-control" id="inputPhone" name="phone">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="" class="col-sm-3 col-form-label">Amount Purchase :</label>
+                  <div class="col-sm-9">
+                    <input type="number" class="form-control" id="inputProductAmount" name="amount">
+                  </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-3 col-form-label">Payment :</label>
+                    <div class="col-sm-9">
+                        <select id="inputPayment" class="form-control" name="payment">
+                            <option value="" selected>Choose Payment Method</option>
+                            <option value="Cash">Physical Cash</option>
+                            <option value="Bank">Bank</option>
+                            <option value="Crypto Currency">Crypto Currency</option>
+                          </select>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="" class="col-sm-3 col-form-label">Date and Time :</label>
+                    <div class="col-sm-9">
+                      <!-- <input type="datetime" class="form-control" id="inputDateTime"> -->
+                      <div class="controls">
+                        <input class="datepicker form-control" type="text" name="date"/>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="" class="col-sm-3 col-form-label">Location :</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="inputLocation" name="location">
+                    </div>
+                  </div>
+                  <div class="summit_button">
+                   <button class="button" id="send_button" type="submit"></i> Confirm</button>
+                    <button class="button" id="cancel_button" type="reset"></i> Clear</button>
+                </div>
+              </form>
+            </div>
+        </div>
+      </div>
+</body>
+
+<script type="text/javascript">
+  $('.datepicker').datepicker({
+      weekStart:1,
+      color: 'red'
+  });
+ </script>
+
+ <!-- <script>
+       function validateForm() {
+        // Validating Empty Comment and Empty Rating
+        document.getElementById("alertRating").style.display = "none";
+        document.getElementById("alertComment").style.display = "none";
+
+        let comment = document.forms["commentForm"]["comment"].value;
+        let rating = document.forms["commentForm"]["rating"].value;
+        if (rating == "" && comment == "") {
+            document.getElementById("alertRating").style.display = "block";
+            document.getElementById("alertComment").style.display = "block";
+            return false;
+        }
+        if (rating == "") {
+            document.getElementById("alertRating").style.display = "block";
+            return false;
+        }
+        if (comment == "") {
+            document.getElementById("alertComment").style.display = "block";
+            return false;
+        }
+        
+        // Validating Inappropiate words
+        var badWords = ["crap", "trash", "poop", "anyswearword"]; // Can add more
+        // "i" is to ignore case and "g" for global "|" for OR match
+        var regex = new RegExp(badWords.join("|"), "gi");
+        if (comment.match(regex).length > 0){
+            alert("Your Comment contains inappropiate words");
+            return false;
+        }
+    }   
+ </script> -->
+</html>
+
