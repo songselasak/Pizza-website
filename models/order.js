@@ -12,12 +12,15 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-
     phone: {
         type: String,
         required: false
     },
     amount: {
+        type: Number,
+        required: false
+    },
+    total: {
         type: Number,
         required: false
     },

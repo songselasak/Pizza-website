@@ -5,15 +5,18 @@ const addPizza = require('../models/addPizza.model');
 
 
 exports.createUserComment = (req, res) =>{
-    if(true){
+    if(!req.cookies["username"]) {
+        return res.redirect('/signup');
+    } 
+    else {
         const productId = req.body.productId;
         const comment = req.body.comment;
         const postAt = new Date().toLocaleString();
         const rating = req.body.rating;
-        console.log(productId);
+        const username = req.cookies["username"];
 
         const userComment = new UserComment({
-            username: "Song Selasak",
+            username: username,
             productId: productId,
             comment: comment,
             rating: rating,
@@ -25,9 +28,6 @@ exports.createUserComment = (req, res) =>{
         }).catch(err=>{
             console.log(err);
         })
-    }
-    else{
-        res.json({success: false});
     }
 }
 

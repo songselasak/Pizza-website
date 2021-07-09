@@ -14,19 +14,18 @@
                     <form action="/UserProfile"><button id="option_B"><img id="option" src="../assets/img/more_option.png" alt="" srcset=""></button></form>
                     <div id="panda-box">
 
-                            <h2 id="pf_name"><%= username %></h2>
-                            <img id="panda" src="../assets/img/panda.jpg" alt="" srcset=""> 
-                            
-                            
+                            <h2 id="pf_name">
+                                <% if (!username) { %>
+                                    User
+                                <% } else{ %>
+                                    <%=username%>
+                                <% } %>  
+                            </h2>
+                            <img id="panda" src="../assets/img/panda.jpg" alt="" srcset="">          
                     </div>
                 </div>  
-                
-             
-
             </div>
-
         </td>
-
     </div>
 
         <td>
@@ -37,13 +36,16 @@
                 <br><br>
                          
 
-                  </form><button id="click1">Order</button><button id="click">Book</button></form> 
+                </form><button id="click1">Order</button><button id="click">Book</button></form> 
 
-                  <form class="search" action="search" method="POST">
-                    <input type="text" placeholder="What are you looking for?" name="search2">
-                    <button type="submit"><i class="fa fa-search"></i></button>
-                  </form>
+                <form class="search" action="search" method="POST">
+                <input type="text" placeholder="What are you looking for?" name="search2">
+                <button type="submit"><i class="fa fa-search"></i></button>
+                </form>
 
+                <% if (username == "admin2021") { %>
+                    <form action="http://localhost:3000/admin-Page"><button type="submit" id="adminBtn">Go to Admin Panel</button></form>
+                 <% } %>
                  
                     <br><br>
                 <div id="menu-Bar">

@@ -1,6 +1,8 @@
 const Product = require('../models/product');
+const UserComment = require('../models/userCommentModel');
 const Cart = require('../models/cart');
-const Pizza = require('../models/addPizza.model')
+const Pizza = require('../models/addPizza.model');
+const Order = require('../models/order');
 const fs = require('fs');
 
 exports.getAllProducts = (req, res, next) => {

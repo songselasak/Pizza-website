@@ -53,12 +53,17 @@ exports.getpizzaPage = (req, res, next) => {
     })
 }
 exports.getUserProfile = (req, res, next) => {
-    addPizza.find().then(product =>{
-        console.log(product);
-    res.render('profile',{product: product, title: 'Profile Page',username: req.cookies["username"]});
-    }).catch(err=>{
-        console.log(err);
-    })
+    if(!req.cookies["username"]) {
+        return res.redirect('/signup');
+    } 
+    else {
+        addPizza.find().then(product =>{
+            console.log(product);
+        res.render('profile',{product: product, title: 'Profile Page',username: req.cookies["username"]});
+        }).catch(err=>{
+            console.log(err);
+        })
+    }
 }
 
 exports.getsidesPage = (req, res, next) => {
@@ -77,12 +82,17 @@ exports.getprofilePage=(req,res,next)=>{
 }
 
 exports.getorderform=(req,res,next)=>{
-    addPizza.findById(req.params.id).then(product =>{
-        // console.log(comment);
-        res.render('orderform', {product: product,username: req.cookies["username"]});
-    }).catch(err=>{
-        console.log(err);
-    })
+    if(!req.cookies["username"]) {
+        return res.redirect('/signup');
+    } 
+    else {
+        addPizza.findById(req.params.id).then(product =>{
+            // console.log(comment);
+            res.render('orderform', {product: product,username: req.cookies["username"]});
+        }).catch(err=>{
+            console.log(err);
+        })
+    }
 }
 exports.getproductPage = (req, res, next) => {
     addPizza.findById(req.params.id, function(err, product){
@@ -103,13 +113,18 @@ exports.getPurchase=(req,res,next)=>{
 }
 
 exports.getadminPage=(req,res,next)=>{
-
-    addPizza.find().then(price =>{
-        console.log(price);
-    res.render('adminPage',{price: price});
-    }).catch(err=>{
-        console.log(err);
-    })
+    if(req.cookies["username"] == "admin2021") {
+        addPizza.find().then(price =>{
+            console.log(price);
+        res.render('adminPage',{price: price});
+        }).catch(err=>{
+            console.log(err);
+        })
+    } 
+    else {
+        res.write("You are not an admin, imposter!");
+        res.end();
+    }
 }
 exports.getmessage=(req,res,next)=>{
     res.render('messageBox',{
@@ -124,29 +139,40 @@ exports.getrecipt=(req,res,next)=>{
 }
 
 exports.getorderlog=(req,res,next)=>{
-
-    Order.find().then(order =>{
-    res.render('orderlog',{order: order});
-    }).catch(err=>{
-        console.log(err);
-    })
-}
-
-exports.getcommentlog=(req,res,next)=>{
-    addPizza.find(function(err, product){
-        UserComment.find().then(comment =>{
-            res.render('commentlog', {comment: comment, product: product});
+    if(req.cookies["username"] == "admin2021") {
+        Order.find().then(order =>{
+            res.render('orderlog',{order: order});
         }).catch(err=>{
             console.log(err);
         })
-    });
+    } 
+    else {
+        res.write("You are not an admin, imposter!");
+        res.end();
+    }
+}
+
+exports.getcommentlog=(req,res,next)=>{
+    if(req.cookies["username"] == "admin2021") {
+        addPizza.find(function(err, product){
+            UserComment.find().then(comment =>{
+                res.render('commentlog', {comment: comment, product: product});
+            }).catch(err=>{
+                console.log(err);
+            })
+        });
+    } 
+    else {
+        res.write("You are not an admin, imposter!");
+        res.end();
+    }
 }
 
 exports.search=(req,res,next)=>{
     let search= new RegExp(req.body.search2,'i');
     console.log(search);
     addPizza.find({title:search}).then(product =>{
-    res.render('HomePage',{product: product, title: 'Online Ordering Pizza'});
+    res.render('HomePage',{product: product, title: 'Online Ordering Pizza', username: req.cookies["username"]});
     }).catch(err=>{
         console.log(err);
     })

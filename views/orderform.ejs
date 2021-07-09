@@ -22,8 +22,8 @@
           <span id="brandName">Online Ordering Pizza Shop</span>
         </div>
         <div>
-            <form action="/admin/add-order" method="POST">
-              <input type="text" name="productID" value="<%=product._id%>" style="display: none;" id="product">
+            <form action="/add-order" method="POST" name="form" onsubmit="return validateForm()">
+              <input type="text" name="productID" value="<%=product._id%>" style="display: none;" id="productid">
               <input type="text" name="product" value="<%=product.title%>" style="display: none;" id="product">
               <input type="text" name="price" value="<%=product.price%>" style="display: none;" id="price">
               <input type="text" name="username" value="<%=username%>" style="display: none;" id="username">
@@ -126,6 +126,14 @@
                     <button class="button" id="cancel_button" type="reset"></i> Clear</button>
                 </div>
               </form>
+              <div class="alert" id="alertForm">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                Please fill in all the form.
+              </div>
+              <div class="alert" id="alertAmount">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                The amount purchase must be greater than zero.
+              </div>
             </div>
         </div>
       </div>
@@ -138,37 +146,30 @@
   });
  </script>
 
- <!-- <script>
+ <script>
        function validateForm() {
-        // Validating Empty Comment and Empty Rating
-        document.getElementById("alertRating").style.display = "none";
-        document.getElementById("alertComment").style.display = "none";
+        // Validating Empty Form
+        document.getElementById("alertForm").style.display = "none";
+        document.getElementById("alertForm").style.display = "none";
 
-        let comment = document.forms["commentForm"]["comment"].value;
-        let rating = document.forms["commentForm"]["rating"].value;
-        if (rating == "" && comment == "") {
-            document.getElementById("alertRating").style.display = "block";
-            document.getElementById("alertComment").style.display = "block";
+        let name = document.forms["form"]["name"].value;
+        let phone = document.forms["form"]["phone"].value;
+        let amount = document.forms["form"]["amount"].value;
+        let payment = document.forms["form"]["payment"].value;
+        let date = document.forms["form"]["date"].value;
+        let location = document.forms["form"]["location"].value;
+
+        if (name == "" || phone == "" || amount == "" || payment == "" || amount == "" || date == "" || location == "") {
+            document.getElementById("alertForm").style.display = "block";
             return false;
         }
-        if (rating == "") {
-            document.getElementById("alertRating").style.display = "block";
-            return false;
-        }
-        if (comment == "") {
-            document.getElementById("alertComment").style.display = "block";
-            return false;
-        }
-        
-        // Validating Inappropiate words
-        var badWords = ["crap", "trash", "poop", "anyswearword"]; // Can add more
-        // "i" is to ignore case and "g" for global "|" for OR match
-        var regex = new RegExp(badWords.join("|"), "gi");
-        if (comment.match(regex).length > 0){
-            alert("Your Comment contains inappropiate words");
-            return false;
+
+        // Validating Amount less than zero
+        if (amount <= 0) {
+          document.getElementById("alertAmount").style.display = "block";
+          return false;
         }
     }   
- </script> -->
+ </script>
 </html>
 

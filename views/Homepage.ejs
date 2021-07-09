@@ -14,7 +14,13 @@
                 <div id="profile">
                             <form action="/UserProfile"><button id="option_B"><img id="option" src="../assets/img/more_option.png" alt="" srcset=""></button></form>
                     <div id="panda-box">
-                            <h2 id="pf_name"><%= username %> </h2>
+                            <h2 id="pf_name">
+                                <% if (!username) { %>
+                                    User
+                                <% } else{ %>
+                                    <%=username%>
+                                <% } %>  
+                            </h2>
                             <img id="panda" src="../assets/img/panda.jpg" alt="" srcset=""> 
                     </div>
                 </div>  
@@ -37,7 +43,10 @@
                     <button type="submit"><i class="fa fa-search"></i></button>
                   </form>
 
-                 
+                 <% if (username == "admin2021") { %>
+                    <form action="http://localhost:3000/admin-Page"><button type="submit" id="adminBtn">Go to Admin Panel</button></form>
+                 <% } %>
+
                     <br><br>
                     <!-- Change link to something like this on other pages as well -->
                 <div id="menu-Bar">

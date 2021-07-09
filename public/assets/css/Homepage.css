@@ -17,12 +17,9 @@
     margin-right: 20px;
     background-color: #D2D2D2;
     margin-top: 10px;
-   
 }
 #option{
     width: 35px;
- 
-
 }
 
 .search{
@@ -362,6 +359,10 @@ width: 230px;
     height: 150px;
     border: 2px solid black;
     font-size: 1.5em;
+}
+
+#adminBtn{
+    font-size: 1em;
 }
 @media (max-width:400px) {
     #menu-Bar{
