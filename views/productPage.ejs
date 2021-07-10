@@ -27,18 +27,11 @@
                                     <%=username%>
                                 <% } %>  
                             </h2>
-                            <img id="panda" src="../assets/img/panda.jpg" alt="" srcset=""> 
-                            
-                            
+                            <img id="panda" src="../assets/img/panda.jpg" alt="" srcset="">      
                     </div>
                 </div>  
-                
-             
-
             </div>
-
         </td>
-
     </div>
     <div class="background"><br>
                 <img id="logo" src="../assets/img/pizza.png" alt="" srcset=""> <form action="">
@@ -191,9 +184,13 @@
                     <h2 id="comment">Comments</h2>
 
                     <% var j = 0 %>
+                    <% var k = -1 %>
                     <table id="customer_comment">
                         <% for(var i=0; i< comment.length; i++) {%>
                             <% if (product._id == comment[i].productId) { %>
+                                <% if (comment[i].username == username) { %>
+                                    <% k = i %>
+                                <% } %>
                                 <tr>
                                     <td class="review">
                                         <div class="review_info">
@@ -260,50 +257,119 @@
                     <% } %>
                     
                     <br><br>
-                    <h3>Write your review here</h3>
-                    <form method="POST" action="/api/comment" onsubmit="return validateForm()" name="commentForm">
-                        <input type="text" name="productId" value="<%=product._id%>" style="display: none;" id="productId">
-                        <select class="star-rating" name="rating">
-                            <option value="">Select a rating</option>
-                            <option value="5">Excellent</option>
-                            <option value="4">Very Good</option>
-                            <option value="3">Average</option>
-                            <option value="2">Poor</option>
-                            <option value="1">Terrible</option>
-                        </select>
 
+                    <% if (k >=0 ) { %>
+                        <h3>Your Comment</h3>
+                        <table id="customer_comment">
+                            <tr>
+                                <td class="review">
+                                    <div class="review_info">
+                                        <div class="reviewer_profile_pic"><img src="../assets/img/panda.jpg" alt=""></div>
+                                        <div>
+                                            <span class="reviewer_name"><%= comment[k].username %></span>
+                                            <% switch (comment[k].rating) {
+                                                
+                                                case 1 : %>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star"></span>
+                                                    <span class="fa fa-star"></span>
+                                                    <span class="fa fa-star"></span>
+                                                    <span class="fa fa-star"></span>
+                                                        <% break;
+                                                
+                                                case 2 : %>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star"></span>
+                                                    <span class="fa fa-star"></span>
+                                                    <span class="fa fa-star"></span>
+                                                        <% break;
+                                                
+                                                case 3 : %>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star"></span>
+                                                    <span class="fa fa-star"></span>
+                                                        <% break;
+    
+                                                case 4 : %>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star"></span>
+                                                        <% break;
+    
+                                                case 5 : %>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                        <% break;
+                                            } %>
+    
+                                            <div class="review_date"><%= comment[k].postAt %></div>
+                                        </div>
+                                    </div>
+                                    <div class="review_comment">
+                                        <%= comment[k].comment %>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <br>
                         <div class="comment_box">
-                            <fieldset>
-                                    <textarea class="input_comment" rows="10" type="text" name="comment"></textarea>
-                            </fieldset> 
-                            <br>
                             <div class="summit_button">
-                                <button class="button" id="send_button"><i class="fa fa-reply" aria-hidden="true" type="submit"></i> Send</button>
+                                <form action="/newComment" method="POST">
+                                    <input type="hidden" name="commentId" value="<%= comment[k]._id%>">
+                                    <input type="hidden" name="productId" value="<%=product._id%>">
+                                    <button class="button" id="send_new_comment_button">Send new review</button>    
+                                </form>
                             </div>
                         </div>
-                    </form>
-                    <div class="alert" id="alertRating">
-                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                        Please select a rating.
-                    </div>
-                    <div class="alert" id="alertComment">
-                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                        Please write a comment.
-                    </div>
-                    <div class="alert" id="alertWord">
-                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                        Comment cannot contain inappropiate words.
-                    </div>
-            
+                    <% } else { %>
+                        <h3>Write your review here</h3>
+                        <form method="POST" action="/api/comment" onsubmit="return validateForm()" name="commentForm">
+                            <input type="hidden" name="productId" value="<%=product._id%>">
+                            <select class="star-rating" name="rating">
+                                <option value="">Select a rating</option>
+                                <option value="5">Excellent</option>
+                                <option value="4">Very Good</option>
+                                <option value="3">Average</option>
+                                <option value="2">Poor</option>
+                                <option value="1">Terrible</option>
+                            </select>
 
+                            <div class="comment_box">
+                                <fieldset>
+                                        <textarea class="input_comment" rows="10" type="text" name="comment"></textarea>
+                                </fieldset> 
+                                <br>
+                                <div class="summit_button">
+                                    <button class="button" id="send_button"><i class="fa fa-reply" aria-hidden="true" type="submit"></i> Send</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="alert" id="alertRating">
+                            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                            Please select a rating.
+                        </div>
+                        <div class="alert" id="alertComment">
+                            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                            Please write a comment.
+                        </div>
+                        <div class="alert" id="alertWord">
+                            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                            Comment cannot contain inappropiate words.
+                        </div>
+                    <% } %>
                 </div>
             </div>
         </div>       
-
-
-
-    
 </body>
+
 <script>
     // {
     const ratings = {
@@ -356,8 +422,5 @@
             return false;
         }
     }   
-
-
-
 </script>
 </html>

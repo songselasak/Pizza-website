@@ -20,6 +20,8 @@ router.post('/deleteOrder',shopController.deleteOrder)
 
 router.post('/deleteComment',shopController.deleteComment)
 
+router.post('/newComment',shopController.newComment)
+
 router.get('/error-demo', (req, res, next) => {
     throw new Error('This is to test Error handling in express');
 });

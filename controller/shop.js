@@ -46,7 +46,6 @@ exports.deleteById = (req, res, next) => {
 }
 
 exports.deleteOrder = (req, res, next) => {
-    //res.redirect('/admin-page');
     const id= req.body.orderId;
     Order.findByIdAndDelete(id)
     .then(result=>{
@@ -58,7 +57,6 @@ exports.deleteOrder = (req, res, next) => {
 }
 
 exports.deleteComment = (req, res, next) => {
-    //res.redirect('/admin-page');
     const id= req.body.commentId;
     UserComment.findByIdAndDelete(id)
     .then(result=>{
@@ -69,6 +67,14 @@ exports.deleteComment = (req, res, next) => {
     }) 
 }
 
-
-
-
+exports.newComment = (req, res, next) => {
+    const id= req.body.commentId;
+    const productId = req.body.productId;
+    UserComment.findByIdAndDelete(id)
+    .then(result=>{
+        console.log(result)
+        res.redirect('/product-page/'+productId)
+    }).catch(error=>{
+        console.log(error)
+    }) 
+}
